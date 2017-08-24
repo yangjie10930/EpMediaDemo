@@ -133,7 +133,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 				}
 			});
 		}else{
-			Toast.makeText(this, "请选择一个视频", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "选择一个视频", Toast.LENGTH_SHORT).show();
 		}
 	}
 }

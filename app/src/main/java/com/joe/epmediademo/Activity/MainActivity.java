@@ -21,5 +21,11 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(new Intent(MainActivity.this,EditActivity.class));
 			}
 		});
+		findViewById(R.id.bt_more).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MainActivity.this,MergeActivity.class));
+			}
+		});
 	}
 }
