@@ -20,11 +20,11 @@ import VideoHandle.EpEditor;
 import VideoHandle.EpVideo;
 import VideoHandle.OnEditorListener;
 
-public class MergeActivity extends AppCompatActivity implements View.OnClickListener{
+public class MergeActivity extends AppCompatActivity implements View.OnClickListener {
 
 	private static final int CHOOSE_FILE = 11;
 	private TextView tv_add;
-	private Button bt_add,bt_merge;
+	private Button bt_add, bt_merge;
 	private List<EpVideo> videoList;
 	private ProgressDialog mProgressDialog;
 
@@ -35,19 +35,24 @@ public class MergeActivity extends AppCompatActivity implements View.OnClickList
 		initView();
 	}
 
-	private void initView(){
-		tv_add = (TextView)findViewById(R.id.tv_add);
+	private void initView() {
+		tv_add = (TextView) findViewById(R.id.tv_add);
 		bt_add = (Button) findViewById(R.id.bt_add);
 		bt_merge = (Button) findViewById(R.id.bt_merge);
 		videoList = new ArrayList<>();
 		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		mProgressDialog.setMax(100);
+		mProgressDialog.setCancelable(false);
+		mProgressDialog.setCanceledOnTouchOutside(false);
+		mProgressDialog.setTitle("正在处理");
 		bt_add.setOnClickListener(this);
 		bt_merge.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()){
+		switch (v.getId()) {
 			case R.id.bt_add:
 				chooseFile();
 				break;
@@ -84,8 +89,8 @@ public class MergeActivity extends AppCompatActivity implements View.OnClickList
 	/**
 	 * 合并视频
 	 */
-	private void mergeVideo(){
-		if(videoList.size() > 1){
+	private void mergeVideo() {
+		if (videoList.size() > 1) {
 			mProgressDialog.show();
 			new EpEditor(this).merge(videoList, new EpEditor.OutputOption(MyApplication.getSavePath() + "outmerge.mp4"), new OnEditorListener() {
 				@Override
@@ -99,8 +104,14 @@ public class MergeActivity extends AppCompatActivity implements View.OnClickList
 					Toast.makeText(MergeActivity.this, "编辑失败", Toast.LENGTH_SHORT).show();
 					mProgressDialog.dismiss();
 				}
+
+				@Override
+				public void onProgress(float v) {
+					mProgressDialog.setProgress((int) (v * 100));
+				}
+
 			});
-		}else{
+		} else {
 			Toast.makeText(this, "至少添加两个视频", Toast.LENGTH_SHORT).show();
 		}
 	}

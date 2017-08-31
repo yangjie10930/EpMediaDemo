@@ -66,7 +66,20 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 				}
 			}
 		});
+		cb_rotation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(!isChecked){
+					cb_mirror.setChecked(false);
+				}
+			}
+		});
 		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		mProgressDialog.setMax(100);
+		mProgressDialog.setCancelable(false);
+		mProgressDialog.setCanceledOnTouchOutside(false);
+		mProgressDialog.setTitle("正在处理");
 	}
 
 	@Override
@@ -130,6 +143,11 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 				public void onFailure() {
 					Toast.makeText(EditActivity.this, "编辑失败", Toast.LENGTH_SHORT).show();
 					mProgressDialog.dismiss();
+				}
+
+				@Override
+				public void onProgress(float v) {
+					mProgressDialog.setProgress((int) (v * 100));
 				}
 			});
 		}else{
