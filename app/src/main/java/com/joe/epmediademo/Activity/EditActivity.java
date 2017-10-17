@@ -2,6 +2,8 @@ package com.joe.epmediademo.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -132,11 +134,16 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 			if(cb_text.isChecked())
 				epVideo.addText(Integer.parseInt(et_text_x.getText().toString().trim()),Integer.parseInt(et_text_y.getText().toString().trim()),30,"red",MyApplication.getSavePath() + "msyh.ttf",et_text.getText().toString().trim());
 			mProgressDialog.show();
-			new EpEditor(this).exec(epVideo, new EpEditor.OutputOption(MyApplication.getSavePath() + "out.mp4"), new OnEditorListener() {
+			final String outPath = MyApplication.getSavePath() + "out.mp4";
+			new EpEditor(this).exec(epVideo, new EpEditor.OutputOption(outPath), new OnEditorListener() {
 				@Override
 				public void onSuccess() {
-					Toast.makeText(EditActivity.this, "编辑完成", Toast.LENGTH_SHORT).show();
+					Toast.makeText(EditActivity.this, "编辑完成:"+outPath, Toast.LENGTH_SHORT).show();
 					mProgressDialog.dismiss();
+
+					Intent v = new Intent(Intent.ACTION_VIEW);
+					v.setDataAndType(Uri.parse(outPath), "video/mp4");
+					startActivity(v);
 				}
 
 				@Override

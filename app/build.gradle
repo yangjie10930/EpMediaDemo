@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.joe.epmediademo"
-        minSdkVersion 21
+        minSdkVersion 18
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -24,6 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.github.yangjie10930:EpMedia:v0.7'
+    compile 'com.github.yangjie10930:EpMedia:v0.8.1'
     testCompile 'junit:junit:4.12'
 }
