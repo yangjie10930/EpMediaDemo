@@ -133,6 +133,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 				epVideo.rotation(Integer.parseInt(et_rotation.getText().toString().trim()),cb_mirror.isChecked());
 			if(cb_text.isChecked())
 				epVideo.addText(Integer.parseInt(et_text_x.getText().toString().trim()),Integer.parseInt(et_text_y.getText().toString().trim()),30,"red",MyApplication.getSavePath() + "msyh.ttf",et_text.getText().toString().trim());
+			mProgressDialog.setProgress(0);
 			mProgressDialog.show();
 			final String outPath = MyApplication.getSavePath() + "out.mp4";
 			new EpEditor(this).exec(epVideo, new EpEditor.OutputOption(outPath), new OnEditorListener() {

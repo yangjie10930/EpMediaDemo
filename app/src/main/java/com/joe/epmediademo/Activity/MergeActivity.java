@@ -2,6 +2,7 @@ package com.joe.epmediademo.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -91,12 +92,18 @@ public class MergeActivity extends AppCompatActivity implements View.OnClickList
 	 */
 	private void mergeVideo() {
 		if (videoList.size() > 1) {
+			mProgressDialog.setProgress(0);
 			mProgressDialog.show();
-			new EpEditor(this).merge(videoList, new EpEditor.OutputOption(MyApplication.getSavePath() + "outmerge.mp4"), new OnEditorListener() {
+			final String outPath = MyApplication.getSavePath() + "outmerge.mp4";
+			new EpEditor(this).merge(videoList, new EpEditor.OutputOption(outPath), new OnEditorListener() {
 				@Override
 				public void onSuccess() {
-					Toast.makeText(MergeActivity.this, "编辑完成", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MergeActivity.this, "编辑完成:"+outPath, Toast.LENGTH_SHORT).show();
 					mProgressDialog.dismiss();
+
+					Intent v = new Intent(Intent.ACTION_VIEW);
+					v.setDataAndType(Uri.parse(outPath), "video/mp4");
+					startActivity(v);
 				}
 
 				@Override
