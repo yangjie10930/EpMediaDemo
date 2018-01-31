@@ -95,7 +95,7 @@ public class MergeActivity extends AppCompatActivity implements View.OnClickList
 			mProgressDialog.setProgress(0);
 			mProgressDialog.show();
 			final String outPath = MyApplication.getSavePath() + "outmerge.mp4";
-			new EpEditor(this).merge(videoList, new EpEditor.OutputOption(outPath), new OnEditorListener() {
+			EpEditor.merge(videoList, new EpEditor.OutputOption(outPath), new OnEditorListener() {
 				@Override
 				public void onSuccess() {
 					Toast.makeText(MergeActivity.this, "编辑完成:"+outPath, Toast.LENGTH_SHORT).show();

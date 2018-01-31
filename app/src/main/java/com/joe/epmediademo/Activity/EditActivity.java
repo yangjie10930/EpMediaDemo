@@ -92,6 +92,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 				break;
 			case R.id.bt_exec:
 				execVideo();
+//				test();
 				break;
 		}
 	}
@@ -136,7 +137,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 			mProgressDialog.setProgress(0);
 			mProgressDialog.show();
 			final String outPath = MyApplication.getSavePath() + "out.mp4";
-			new EpEditor(this).exec(epVideo, new EpEditor.OutputOption(outPath), new OnEditorListener() {
+			EpEditor.exec(epVideo, new EpEditor.OutputOption(outPath), new OnEditorListener() {
 				@Override
 				public void onSuccess() {
 					Toast.makeText(EditActivity.this, "编辑完成:"+outPath, Toast.LENGTH_SHORT).show();
@@ -161,5 +162,29 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 		}else{
 			Toast.makeText(this, "选择一个视频", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	private void test(){
+		final String outPath = "/storage/emulated/0/Download/music.mp4";
+		EpEditor.music(videoUrl, "/storage/emulated/0/DownLoad/huluwa.aac", outPath, 1.0f, 1.0f, new OnEditorListener() {
+			@Override
+			public void onSuccess() {
+				Toast.makeText(EditActivity.this, "编辑完成:"+outPath, Toast.LENGTH_SHORT).show();
+
+				Intent v = new Intent(Intent.ACTION_VIEW);
+				v.setDataAndType(Uri.parse(outPath), "video/mp4");
+				startActivity(v);
+			}
+
+			@Override
+			public void onFailure() {
+				Toast.makeText(EditActivity.this, "编辑失败", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onProgress(float v) {
+
+			}
+		});
 	}
 }
